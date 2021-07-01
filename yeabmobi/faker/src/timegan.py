@@ -102,6 +102,10 @@ def timegan(ori_data, ori_time, max_val, min_val, max_seq_len, parameters):
       Y_hat = tf.contrib.layers.fully_connected(d_outputs, 1, activation_fn=None)
     return Y_hat
 
+  def position_loss_fn(H, low, upp):
+    logits = tf.math.pow((tf.minimum(0., upp - H) + tf.minimum(0., H - low)), 2)
+    return tf.reduce_sum(logits)
+
   # Input place holders
   X = tf.placeholder(tf.float32, [None, max_seq_len, dim], name="myinput_x")
   Z = tf.placeholder(tf.float32, [None, max_seq_len, z_dim], name="myinput_z")
@@ -144,7 +148,13 @@ def timegan(ori_data, ori_time, max_val, min_val, max_seq_len, parameters):
   G_loss_U_e = tf.losses.sigmoid_cross_entropy(tf.ones_like(Y_fake_e), Y_fake_e)
 
   # 2. Supervised loss
+  X1_loss_pt = position_loss_fn(H_hat_supervise[:, :, 1], 10, 790)
+  X2_loss_pt = position_loss_fn(H_hat_supervise[:, :, 3], 10, 790)
+  Y1_loss_pt = position_loss_fn(H_hat_supervise[:, :, 2], 10, 790)
+  Y2_loss_pt = position_loss_fn(H_hat_supervise[:, :, 4], 10, 790)
+
   G_loss_S = tf.losses.mean_squared_error(H[:, 1:, :], H_hat_supervise[:, :-1, :])
+  G_loss_pt_tot = G_loss_S + X1_loss_pt + X2_loss_pt + Y1_loss_pt + Y2_loss_pt
 
   # 3. Two Momments
   G_loss_V1 = tf.reduce_mean(
@@ -154,7 +164,7 @@ def timegan(ori_data, ori_time, max_val, min_val, max_seq_len, parameters):
   G_loss_V = G_loss_V1 + G_loss_V2
 
   # 4. Summation
-  G_loss = G_loss_U + gamma * G_loss_U_e + 100 * tf.sqrt(G_loss_S) + 100 * G_loss_V
+  G_loss = G_loss_U + gamma * G_loss_U_e + 100 * tf.sqrt(G_loss_S) + 100 * G_loss_V + G_loss_pt_tot
 
   E_loss_T0 = tf.losses.mean_squared_error(X, X_tilde)
   E_loss0 = 10 * tf.sqrt(E_loss_T0)
