@@ -109,8 +109,8 @@ def main (args):
     metric_results['predictive'] = np.mean(predictive_score)
 
     # 3. Visualization (PCA and tSNE)
-    visualization(seq_data, generated_data, 'pca')
-    visualization(seq_data, generated_data, 'tsne')
+    # visualization(seq_data, generated_data, 'pca')
+    # visualization(seq_data, generated_data, 'tsne')
 
     ## Print discriminative and predictive scores
     print(metric_results)
