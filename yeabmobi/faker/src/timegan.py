@@ -5,6 +5,7 @@ import os
 from utils import rnn_cell, random_generator, batch_generator
 
 def timegan(ori_data, ori_time, max_val, min_val, max_seq_len, parameters):
+  tf.logging.set_verbosity(tf.logging.ERROR)
 
   # Initialization on the Graph
   tf.reset_default_graph()
@@ -112,7 +113,6 @@ def timegan(ori_data, ori_time, max_val, min_val, max_seq_len, parameters):
   T = tf.placeholder(tf.int32, [None], name="myinput_t")
 
   # Embedder & Recovery
-
   H = embedder(X, T)
   X_tilde = recovery(H, T)
 

@@ -180,6 +180,7 @@ if __name__ == '__main__':
 
     # Calls main function
     ori_data, gen_data, metrics = main(args)
+
     output_dir = os.path.join(args.work_dir, 'output/data')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
