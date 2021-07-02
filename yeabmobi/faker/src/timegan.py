@@ -6,7 +6,7 @@ from utils import rnn_cell, random_generator, batch_generator
 
 
 def timegan(ori_data, ori_time, max_val, min_val, max_seq_len, parameters):
-  tf.logging.set_verbosity(tf.logging.ERROR)
+  tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
   # Initialization on the Graph
   tf.reset_default_graph()
