@@ -67,10 +67,10 @@ def read_bhv_data(data_dir, data_name, seq_len):
 def main (args):
     os.environ["CUDA_VISIBLE_DEVICES"] = "{}".format(args.gpu)
 
-    data_dir = args.work_dir
-    seq_data, norm_data, seq_time, max_val, min_val = read_bhv_data(data_dir, args.data_name, args.seq_len)
+    # data_dir = args.work_dir
+    seq_data, norm_data, seq_time, max_val, min_val = read_bhv_data(args.data_path, args.seq_len)
     print(np.asarray(norm_data).shape)
-    print(args.data_name + ' dataset is ready.')
+    print(args.data_path + ' dataset is ready.')
 
     ## Synthetic data generation by TimeGAN
     # Set newtork parameters
@@ -123,7 +123,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', default=0, type=int)
     parser.add_argument(
-        '--data_name',
+        '--data_path',
         default='train.txt',
         type=str)
     parser.add_argument(
