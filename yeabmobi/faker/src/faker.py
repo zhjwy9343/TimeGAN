@@ -26,9 +26,9 @@ import tensorflow as tf
 # os.environ['KMP_SETTINGS'] = '1'
 
 
-def read_bhv_data(data_dir, data_name, seq_len):
+def read_bhv_data(data_path, seq_len):
   import pandas as pd
-  file_path = os.path.join(data_dir, data_name)
+  file_path = data_path
   train_df = pd.read_csv(file_path, usecols=[0, 1, 2, 3, 4, 5, 6]).to_numpy()
 
   id_col = train_df[:, :1]
