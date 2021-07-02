@@ -75,7 +75,7 @@ def main (args):
     ## Synthetic data generation by TimeGAN
     # Set newtork parameters
     parameters = dict()
-    parameters['work_dir'] = args.work_dir + str(np.random.randint(0, 10000))
+    parameters['work_dir'] = args.work_dir
     parameters['module'] = args.module
     parameters['hidden_dim'] = args.hidden_dim
     parameters['num_layer'] = args.num_layer
@@ -176,6 +176,7 @@ if __name__ == '__main__':
         default='./data')
 
     args = parser.parse_args()
+    args.work_dir = args.work_dir + str(np.random.randint(0, 10000))
     print(args)
 
     # Calls main function
