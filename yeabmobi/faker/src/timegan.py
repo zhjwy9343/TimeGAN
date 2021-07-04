@@ -149,10 +149,10 @@ def timegan(ori_data, ori_time, max_val, min_val, max_seq_len, parameters):
   G_loss_U_e = tf.losses.sigmoid_cross_entropy(tf.ones_like(Y_fake_e), Y_fake_e)
 
   # 2. Supervised loss
-  X1_loss_pt = position_loss_fn(H_hat_supervise[:, :, 1], 10, 790)
-  X2_loss_pt = position_loss_fn(H_hat_supervise[:, :, 3], 10, 790)
-  Y1_loss_pt = position_loss_fn(H_hat_supervise[:, :, 2], 10, 790)
-  Y2_loss_pt = position_loss_fn(H_hat_supervise[:, :, 4], 10, 790)
+  X1_loss_pt = position_loss_fn(H_hat_supervise[:, :, 1], 40, 680)
+  X2_loss_pt = position_loss_fn(H_hat_supervise[:, :, 3], 40, 680)
+  Y1_loss_pt = position_loss_fn(H_hat_supervise[:, :, 2], 40, 1240)
+  Y2_loss_pt = position_loss_fn(H_hat_supervise[:, :, 4], 40, 1240)
 
   G_loss_S = tf.losses.mean_squared_error(H[:, 1:, :], H_hat_supervise[:, :-1, :])
   G_loss_pt_tot = G_loss_S + X1_loss_pt + X2_loss_pt + Y1_loss_pt + Y2_loss_pt
