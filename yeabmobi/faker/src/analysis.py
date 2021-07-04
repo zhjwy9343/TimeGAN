@@ -43,12 +43,12 @@ def head_map(folder, file, file_type):
   print(file_type, "swipe num:", len(swipe), "click num:", len(click))
 
   swipe_heat = HeatMap(swipe)
-  swipe_heat.clickmap(save_as=os.path.join(folder, file_type + "_swipe_click_map.png"))  # 点击图
-  swipe_heat.heatmap(save_as=os.path.join(file_type + "_swipe_heat_map.png"))  # 热图
+  swipe_heat.clickmap(save_as=os.path.join(folder, file_type + "_swipe_click_map.png"))  # swipe map
+  swipe_heat.heatmap(save_as=os.path.join(folder, file_type + "_swipe_heat_map.png"))  # swipe heatmap
 
   click_heat = HeatMap(click)
-  click_heat.clickmap(save_as=os.path.join(file_type + "_click_click_map.png"))  # 点击图
-  click_heat.heatmap(save_as=os.path.join(file_type + "_click_heat_map.png"))  # 热图
+  click_heat.clickmap(save_as=os.path.join(folder, file_type + "_click_click_map.png"))  # click map
+  click_heat.heatmap(save_as=os.path.join(folder, file_type + "_click_heat_map.png"))  # click heatmap
 
 
 def click_cnt_stat(file):
