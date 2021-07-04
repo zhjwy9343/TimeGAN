@@ -1,8 +1,8 @@
-
+import argparse
+import os
 from pyheatmap.heatmap import HeatMap
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 import numpy as np
+
 
 def count_ccn(ccn, ccn_cnt):
   if ccn == 0:
@@ -20,7 +20,7 @@ def count_ccn(ccn, ccn_cnt):
   return ccn_cnt
 
 
-def head_map(file, file_type):
+def head_map(folder, file, file_type):
   click = []
   swipe = []
   for line in open(file):
@@ -43,14 +43,12 @@ def head_map(file, file_type):
   print(file_type, "swipe num:", len(swipe), "click num:", len(click))
 
   swipe_heat = HeatMap(swipe)
-  swipe_heat.clickmap(save_as=file_type + "_swipe_click_map.png")  # 点击图
-  swipe_heat.heatmap(save_as=file_type + "_swipe_heat_map.png")  # 热图
+  swipe_heat.clickmap(save_as=os.path.join(folder, file_type + "_swipe_click_map.png"))  # 点击图
+  swipe_heat.heatmap(save_as=os.path.join(file_type + "_swipe_heat_map.png"))  # 热图
 
   click_heat = HeatMap(click)
-  click_heat.clickmap(save_as=file_type + "_click_click_map.png")  # 点击图
-  click_heat.heatmap(save_as=file_type + "_click_heat_map.png")  # 热图
-
-
+  click_heat.clickmap(save_as=os.path.join(file_type + "_click_click_map.png"))  # 点击图
+  click_heat.heatmap(save_as=os.path.join(file_type + "_click_heat_map.png"))  # 热图
 
 
 def click_cnt_stat(file):
@@ -93,9 +91,6 @@ def click_cnt_stat(file):
   print(click_cnt)
 
 
-
-
-
 def click_session_cnt(file):
   click = False
   session_cnt = 0
@@ -123,15 +118,14 @@ def click_session_cnt(file):
   print(click_session_cnt)
 
 
-
 if __name__ == '__main__':
-  # print("ori data: ")
-  # click_cnt_stat('/Users/zhanghao/dianyi/faker/data/output/ori_data_1280_720.txt')
-  # print("gen data: ")
-  # click_cnt_stat('/Users/zhanghao/dianyi/faker/data/output/gen_data_1280_720.txt')
+  parser = argparse.ArgumentParser("")
+  parser.add_argument("--data_folder", type=str, required=True, help="the input data folder with the two .txt files")
+  args = parser.parse_args()
+  print(args)
 
-  head_map('../../output/data/ori_data_1280_720.txt', 'ori')
-  head_map('../../output/data/gen_data_1280_720.txt', 'gen')
-  # head_map('/Users/zhanghao/Desktop/result.txt', 'result')
+  ori_data = 'ori_data_1280_720.txt'
+  gen_data = 'gen_data_1280_720.txt'
 
-  #click_session_cnt('/Users/zhanghao/dianyi/faker/data/output/ori_data_1280_720.txt')
+  head_map(args.data_folder, os.path.join(args.data_folder, ori_data), 'ori')
+  head_map(args.data_folder, os.path.join(args.data_folder, gen_data), 'gen')
